@@ -1,9 +1,8 @@
 import sys
 import os
 
-#Agregar la ruta base del proyecto
+# Agregar la ruta base del proyecto
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
 
 from Modelo.Producto import Productos
 
@@ -14,22 +13,23 @@ def crear_producto():
     precio = float(input("Ingrese el precio del producto: "))
     producto = Productos(nombre, precio)
     productos.append(producto)
-    print(f"Producto {nombre} creado con éxito.")
+    print(f"Producto '{producto.get_nombre()}' creado con éxito.")
 
 def Listar_productos():
     if not productos:
         print("No hay productos registrados.")
-    for producto in productos:
-        print(producto)
+    else:
+        for producto in productos:
+            print(producto)
 
 def actualizar_producto():
     nombre = input("Ingrese el nombre del producto a actualizar: ")
     for producto in productos:
-        if producto.nombre == nombre:
-            nuevo_nombre = input(f"Nuevo nombre para el producto (anterior: {producto.nombre}): ")
-            nuevo_precio = float(input(f"Nuevo precio para el producto (anterior: {producto.precio}): "))
-            producto.nombre = nuevo_nombre
-            producto.precio = nuevo_precio
+        if producto.get_nombre() == nombre:
+            nuevo_nombre = input(f"Nuevo nombre para el producto (anterior: {producto.get_nombre()}): ")
+            nuevo_precio = float(input(f"Nuevo precio para el producto (anterior: {producto.get_precio()}): "))
+            producto.set_nombre(nuevo_nombre)
+            producto.set_precio(nuevo_precio)
             print("Producto actualizado con éxito.")
             return
     print("Producto no encontrado.")
@@ -37,8 +37,8 @@ def actualizar_producto():
 def eliminar_producto():
     nombre = input("Ingrese el nombre del producto a eliminar: ")
     for producto in productos:
-        if producto.nombre == nombre:
+        if producto.get_nombre() == nombre:
             productos.remove(producto)
-            print(f"Producto {nombre} eliminado.")
+            print(f"Producto '{nombre}' eliminado.")
             return
     print("Producto no encontrado.")
