@@ -1,7 +1,7 @@
 import sys
 import os
 
-#Agregar la ruta base del proyecto
+# Agregar la ruta base del proyecto
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from Modelo.Cliente import Cliente
@@ -19,14 +19,14 @@ def listar_clientes():
     if not clientes:
         print("No hay clientes registrados.")
     for cliente in clientes:
-        print(cliente)
+        print(cliente)  # Usa __str__
 
 def actualizar_cliente():
     cedula = input("Ingrese la cédula del cliente a actualizar: ")
     for cliente in clientes:
-        if cliente.cedula == cedula:
-            nuevo_nombre = input(f"Nuevo nombre para el cliente (anterior: {cliente.nombre}): ")
-            cliente.nombre = nuevo_nombre
+        if cliente.get_cedula() == cedula:
+            nuevo_nombre = input(f"Nuevo nombre para el cliente (anterior: {cliente.get_nombre()}): ")
+            cliente.set_nombre(nuevo_nombre)
             print("Cliente actualizado con éxito.")
             return
     print("Cliente no encontrado.")
@@ -34,7 +34,7 @@ def actualizar_cliente():
 def eliminar_cliente():
     cedula = input("Ingrese la cédula del cliente a eliminar: ")
     for cliente in clientes:
-        if cliente.cedula == cedula:
+        if cliente.get_cedula() == cedula:
             clientes.remove(cliente)
             print(f"Cliente con cédula {cedula} eliminado.")
             return
